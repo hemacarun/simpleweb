@@ -10,11 +10,32 @@
    
  <div class="row">
    <div class="col-md-8">
-   gallery List      
-   </div>
+    @if($galleries->count()>0)
+      <table class="table table-striped table-bordered table-responsive">
+      <thead>
+         <tr>
+            <th>Name of the gallery</th>
+               <th></th>
+         </tr>
+      </thead>
+         <tbody>
+            @foreach($galleries as $gallery)
+               <tr>
+                  <td>{{$gallery->name}}</td>                 
+                  
+                     <td>View</td>
+               </tr>
+               @endforeach
+         </tbody>
+         
+         
+      </table>
+      @endif
+       
+   </div> <!--mked-8 div-->
       
    <div class="col-md-4">
-   <form class="form" method="POST"action={{url('gallery/savegallery')}}>
+   <form class="form" method="POST"action={{url('gallery/save')}}>
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
       
       <div class="form-group">
@@ -27,8 +48,5 @@
    
  </div>  
 
-<form action="/foo/bar" method="POST" class="dropzone" id="addImages">
-    <input type="hidden" name="_method" value="PUT">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-</form>
+
 @endsection

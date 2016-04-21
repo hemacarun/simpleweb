@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Gallery;
 use App\Http\Requests;
 
 class GalleryController extends Controller
@@ -12,13 +12,27 @@ class GalleryController extends Controller
 
            
          public function viewgallerylist(){
-            return view('gallery');
+           $galleries = Gallery::all();
+
+           
+            return view('gallery')->with('galleries',$galleries);
            
            }
            
            public function savegallery(Request $request){
                       
-                      
+            $gallery = new Gallery;
+            // save new gallery name
+            $gallery->name=$request->input('gallery_name');
+            $gallery->created_by=1;
+            $gallery->published =1;
+            $gallery->created_at=time();
+            $gallery->updated_at=1;
+            $gallery->save();
+            
+            return redirect()->back();
+            
+            
                       
            }
            
