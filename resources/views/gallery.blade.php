@@ -16,14 +16,16 @@
          <tr>
             <th>Name of the gallery</th>
                <th></th>
+                  <th></th>
          </tr>
       </thead>
          <tbody>
             @foreach($galleries as $gallery)
                <tr>
-                  <td>{{$gallery->name}}</td>                 
+                     <td>{{$gallery->name}}</td>                 
                   
-                     <td>View</td>
+                     <td> <a href="{{url('gallery/view/'.$gallery->id.'')}}">View</a></td>
+                     <td> <a href="{{url('gallery/delete/'.$gallery->id.'')}}">Delete</a></td>   
                </tr>
                @endforeach
          </tbody>
@@ -35,12 +37,28 @@
    </div> <!--mked-8 div-->
       
    <div class="col-md-4">
+   @if (count($errors)>0)
+      <div class="alert alert-danger">
+       <ul>
+       
+         @foreach($errors->all() as $error)
+            
+            <li> {{$error}}</li>
+            
+         @endforeach   
+       </ul>
+         
+         
+      </div>
+      
+  @endif    
    <form class="form" method="POST"action={{url('gallery/save')}}>
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
       
       <div class="form-group">
          <input type="text" name="gallery_name" id="gallery_name" placeholder="Name of the gallery"
-          class="form-control" />
+          class="form-control"
+          value ="{{old('gallery_name')}}"/>
       </div>
        <button class="btn btn-primary">Save</button>
    </form>   

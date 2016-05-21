@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
+
 
 class AuthController extends Controller
 {
@@ -68,5 +73,26 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    
+    
+    public function dologin(Request $request){
+        
+        
+
+      $credentials=[
+        'email'=>$request->input('email'),
+        'password'=>$request->input('password')
+        
+      ];
+      if(!Auth::attempt($credentials)){
+        
+        Session::flash('flash_error','Something went wrong with your crrdentials');
+    
+       return redirect()->back();
+      }
+        
+        Session::flash('flash_message','you have logged in successfully');
+        return redirect('gallery/list');
     }
 }

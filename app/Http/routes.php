@@ -11,17 +11,27 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+   return view('users.login');
+});
 
-Route::get('/', 'IndexController@index');
+Route::post('auth/dologin', 'Auth\AuthController@dologin');
+Route::get('user/logout',function(){
+   Auth::logout();
+   return redirect('/');
+   });
 
-Route::get('/contact', 'ContactController@index');
+
 
 Route::get('/gallery','GalleryController@index');
 
 Route::get('gallery/list','GalleryController@viewgallerylist');
 Route::post('gallery/save','GalleryController@savegallery');
 Route::get('gallery/view/{id}','GalleryController@viewgallerypics');
-Route::post('image/upload/{id}','GalleryController@imageupload');
+Route::get('gallery/delete/{id}','GalleryController@deletegallery');
+Route::post('image/upload','GalleryController@imageupload');
+Route::get('/contact', 'ContactController@index');
+
+//Route::auth();
+
+
